@@ -1,0 +1,34 @@
+* feedreverser - an RSS feed reverser
+
+I wanted to use [[https://github.com/edsu/feediverse][feediverse]] to feed an existing wordpress blog RSS feed to mastodon.
+
+However, I wanted to
+ 1. Post the rss entries as toots with the oldest entries first, i.e. the reverse order of the wordpress feed
+ 2. Post the rss entries one toot at a time
+
+This python script is an attempt at doing it.  The script is intended to run just before feediverse in the crontab.  What it will do then, is to pick the last item of the input feed and write it as the single item of a new RSS file.
+
+The script keeps track of the items consumed in the .feedreverser file.
+
+** Installing on debian
+
+To install:
+ 1. As root, install python3 pip, and use it to install the runtime dependencies
+    #+begin_example
+      apt install python3-pip
+      pip3 install pyyaml
+      pip3 install feedparser
+      pip3 install python-dateutil
+      pip3 install feedgen
+    #+end_example
+ 2. As your own user,
+    1. clone the repo
+       #+begin_example
+         mkdir -p ~/git
+         cd ~/git
+         git clone https://github.com/steinarb/feedreverser.git
+       #+end_example
+    2. Run the script and give the feed URL and the file to store the reversed feed in (e.g. =/tmp/reversed.rss=)
+       #+begin_example
+         python3 git/feedreverser/feedreverser.py
+       #+end_example
