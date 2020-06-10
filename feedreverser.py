@@ -14,19 +14,22 @@ def main():
 
     config = read_config(config_file)
     feed = feedparser.parse(config['feed_url'])
+    consumed = config['consumed']
     fg = FeedGenerator();
     fg.title('Reversed feed')
     fg.link(href='http://localhost/reversed', rel='alternate')
     fg.description('Snudd feed')
     for entry in reversed(feed.entries):
-        fe = fg.add_entry()
-        fe.id(entry.id)
-        fe.title(entry.title)
-        fe.summary(entry.summary)
-        fe.category(entry.tags)
-        now = datetime.now(tz=timezone.utc)
-        fe.pubDate(now)
-        fe.updated(now)
+        if entry.id not in consumed:
+            fe = fg.add_entry()
+            fe.id(entry.id)
+            fe.title(entry.title)
+            fe.summary(entry.summary)
+            fe.category(entry.tags)
+            now = datetime.now(tz=timezone.utc)
+            fe.pubDate(now)
+            fe.updated(now)
+            consumed.append(entry.id)
 
     fg.rss_file(config['reversed_file'])
     save_config(config, config_file)
