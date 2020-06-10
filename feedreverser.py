@@ -5,6 +5,7 @@ import yaml
 from dateutil import parser
 import feedparser
 from datetime import datetime, timezone
+from feedgen.feed import FeedGenerator
 
 def main():
     config_file = get_config_file()
@@ -12,7 +13,19 @@ def main():
         setup(config_file)
 
     config = read_config(config_file)
+    feed = feedparser.parse(config['feed_url'])
+    fg = FeedGenerator();
+    fg.title('Reversed feed')
+    fg.link(href='http://localhost/reversed', rel='alternate')
+    fg.description('Snudd feed')
+    for entry in reversed(feed.entries):
+        fe = fg.add_entry()
+        fe.id(entry.id)
+        fe.title(entry.title)
+        fe.summary(entry.summary)
+        fe.category(entry.tags)
 
+    fg.rss_file(config['reversed_file'])
     save_config(config, config_file)
 
 def get_config_file():
