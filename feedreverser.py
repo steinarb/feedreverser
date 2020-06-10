@@ -30,6 +30,7 @@ def main():
             fe.pubDate(now)
             fe.updated(now)
             consumed.append(entry.id)
+            break
 
     fg.rss_file(config['reversed_file'])
     save_config(config, config_file)
