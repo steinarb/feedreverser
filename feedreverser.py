@@ -24,6 +24,9 @@ def main():
         fe.title(entry.title)
         fe.summary(entry.summary)
         fe.category(entry.tags)
+        now = datetime.now(tz=timezone.utc)
+        fe.pubDate(now)
+        fe.updated(now)
 
     fg.rss_file(config['reversed_file'])
     save_config(config, config_file)
