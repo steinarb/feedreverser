@@ -26,7 +26,8 @@ def main():
             fe.title(entry.title)
             fe.summary(entry.summary)
             for tag in entry.tags:
-                fe.category(term = tag.term)
+                if 'uncategorized' != tag.term.lower():
+                    fe.category(term = tag.term)
             now = datetime.now(tz=timezone.utc)
             fe.pubDate(now)
             fe.updated(now)
