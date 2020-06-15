@@ -6,6 +6,7 @@ from dateutil import parser
 import feedparser
 from datetime import datetime, timezone
 from feedgen.feed import FeedGenerator
+from bs4 import BeautifulSoup
 
 def main():
     config_file = get_config_file()
@@ -24,7 +25,8 @@ def main():
             fe = fg.add_entry()
             fe.id(entry.id)
             fe.title(entry.title)
-            fe.summary(entry.summary)
+            summarySoup = BeautifulSoup(entry.summary, features="lxml")
+            fe.summary(summarySoup.get_text())
             for tag in entry.tags:
                 if 'uncategorized' != tag.term.lower():
                     fe.category(term = tag.term)

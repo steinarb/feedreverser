@@ -20,6 +20,7 @@ To install:
       pip3 install feedparser
       pip3 install python-dateutil
       pip3 install feedgen
+      pip3 install beautifulsoup4
     #+end_example
  2. As your own user,
     1. clone the repo
