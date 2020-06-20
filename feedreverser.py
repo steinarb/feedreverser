@@ -24,7 +24,8 @@ def main():
         if entry.id not in consumed:
             fe = fg.add_entry()
             fe.id(entry.id)
-            fe.title(entry.title)
+            titleSoup = BeautifulSoup(entry.title, features="lxml")
+            fe.title(titleSoup.get_text())
             summarySoup = BeautifulSoup(entry.summary, features="lxml")
             fe.summary(summarySoup.get_text())
             for tag in entry.tags:
