@@ -56,7 +56,7 @@ def save_config(config, config_file):
 def read_config(config_file):
     config = {}
     with open(config_file) as fh:
-        config = yaml.load(fh)
+        config = yaml.load(fh, Loader=yaml.FullLoader)
     return config
 
 def setup(config_file):
