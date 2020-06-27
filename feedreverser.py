@@ -30,7 +30,7 @@ def main():
             fe.summary(summarySoup.get_text())
             for tag in entry.tags:
                 if 'uncategorized' != tag.term.lower():
-                    fe.category(term = tag.term)
+                    fe.category(term = tag.term.replace(' ', '_'))
             now = datetime.now(tz=timezone.utc)
             fe.pubDate(now)
             fe.updated(now)
